@@ -19,11 +19,13 @@ app.get("/", async function(req, res){
     res.send("Hello World");
 });
 
+const PORT=process.env.PORT || 5000
+
 try {
     connectDB(process.env.MONGODB_URL_2);
 
-    app.listen(5000, function(){
-        console.log("Server started at port 5000"); 
+    app.listen(PORT, function(){
+        console.log(`Server started at port ${PORT}`); 
     });
 
 } catch (error) {
