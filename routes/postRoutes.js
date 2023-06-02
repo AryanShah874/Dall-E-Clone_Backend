@@ -5,6 +5,12 @@ const Post=require("../mongodb/post")  //very very important how to export model
 
 const router=express.Router();
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 router.get("/", async function(req, res){
     try {
         const posts=await Post.find({});
@@ -15,16 +21,11 @@ router.get("/", async function(req, res){
 });
 
 router.post("/", async function(req, res){
+
     try {
         const {name, prompt, photo}=req.body;
 
-        cloudinary.config({
-            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-            api_key: process.env.CLOUDINARY_API_KEY,
-            api_secret: process.env.CLOUDINARY_API_SECRET
-        });
-    
-        const photoUrl=await cloudinary.v1.uploader.upload(photo);
+        const photoUrl=await cloudinary.uploader.upload(photo);
 
         const newPost=new Post({
             name: name, 
