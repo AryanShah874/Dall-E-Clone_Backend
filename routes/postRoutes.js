@@ -24,7 +24,7 @@ router.post("/", async function(req, res){
             api_secret: process.env.CLOUDINARY_API_SECRET
         });
     
-        const photoUrl=await cloudinary.v2.uploader.upload(photo);
+        const photoUrl=await cloudinary.v1.uploader.upload(photo);
 
         const newPost=new Post({
             name: name, 
